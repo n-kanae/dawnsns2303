@@ -8,10 +8,10 @@
 <h2>新規ユーザー登録</h2>
 
 {!! Form::label('ユーザー名') !!}
-{!! Form::text('username',null,['class' => 'input'],['placeholder' => 'dawntown']) !!}
+{!! Form::text('username',null,['class' => 'input','placeholder' => 'dawntown']) !!}
 
 {!! Form::label('メールアドレス') !!}
-{!! Form::email('mail',null,['class' => 'input',['placeholder' => 'dawn@dawn.jp']) !!}
+{!! Form::email('mail',null,['class' => 'input','placeholder' => 'dawn@dawn.jp']) !!}
 
 {!! Form::label('パスワード') !!}
 {!! Form::password('password',null,['class' => 'input']) !!}
