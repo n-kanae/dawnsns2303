@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -13,10 +14,12 @@ class UsersController extends Controller
         $this->middleware('auth');
     }
     public function profile(){
-        return view('users.profile');
+        $user = Auth::user();
+        return view('users.profile',  compact('user'));
     }
     public function search(){
-        return view('users.search');
+        $user = Auth::user();
+        return view('users.search',  compact('user'));
     }
     public function userValidates(Request $request){
         Validator::make(
