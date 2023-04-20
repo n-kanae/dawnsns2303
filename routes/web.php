@@ -29,6 +29,7 @@ Route::post('/register', 'Auth\RegisterController@register');
 Route::get('/added', 'Auth\RegisterController@added');
 
 Route::get('/logout', 'Auth\LoginController@logout');
+Route::post('/logout', 'Auth\LoginController@login');
 
 //ログイン中のページ
 Route::get('/top','PostsController@index');
