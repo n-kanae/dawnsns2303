@@ -44,3 +44,5 @@ Route::get('/follower-list','FollowsController@followerList');
 Route::group(['middleware' => 'auth'], function() {
 Route::get('/top','FollowsController@show');
 });
+
+Route::post('/post', 'PostsController@create');

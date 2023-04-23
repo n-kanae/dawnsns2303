@@ -1,6 +1,12 @@
 @extends('layouts.login')
 
 @section('content')
-<h2>機能を実装していきましょう。</h2>
+{!! Form::open(['url' => '/post']) !!}
+<img src="images/dawn.png">
+        <div class="form-group">
+            {!! Form::input('text', 'newPost', null, ['required', 'class' => 'form-control', 'placeholder' => '何をつぶやこうか…？']) !!}
+        </div>
+        <button type="submit" class=""><img src="images/post.png"></button>
+        {!! Form::close() !!}
 
 @endsection
