@@ -40,3 +40,7 @@ Route::get('/search','UsersController@index');
 
 Route::get('/follow-list','PostsController@index');
 Route::get('/follower-list','PostsController@index');
+
+Route::group(['middleware' => 'auth'], function() {
+Route::get('/top','FollowsController@show');
+});
