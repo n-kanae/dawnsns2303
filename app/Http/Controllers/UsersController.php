@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -17,10 +18,22 @@ class UsersController extends Controller
         $user = Auth::user();
         return view('users.profile',  compact('user'));
     }
-    public function search(){
+    public function search(Request $request){
         $user = Auth::user();
-        return view('users.search',  compact('user'));
+        if(request('search')){
+            //▼POSTの場合・request('search')→name=search値がとんできたら
+            $keyword = $request->search;
+            $all_users = DB::table('users')
+            ->where('username','LIKE',"%".$keyword."%")
+            ->get();
+        }else{
+            //▼GETの場合
+        $all_users = DB::table('users')
+        ->get();
+        }
+        return view('users.search',  compact('user','all_users'));
     }
+
     public function userValidates(Request $request){
         Validator::make(
         //▼①値の配列
