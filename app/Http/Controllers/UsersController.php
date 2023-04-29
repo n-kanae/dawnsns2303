@@ -20,6 +20,9 @@ class UsersController extends Controller
     }
     public function search(Request $request){
         $user = Auth::user();
+        $followings = DB::table('follows')
+        ->where('follower_id',Auth::id())
+        ->get();
         if(request('search')){
             //▼POSTの場合・request('search')→name=search値がとんできたら
             $keyword = $request->search;
@@ -31,7 +34,7 @@ class UsersController extends Controller
         $all_users = DB::table('users')
         ->get();
         }
-        return view('users.search',  compact('user','all_users'));
+        return view('users.search',  compact('user','all_users','followings'));
     }
 
     public function userValidates(Request $request){
