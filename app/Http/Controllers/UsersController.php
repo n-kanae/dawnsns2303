@@ -31,7 +31,8 @@ class UsersController extends Controller
         ->where('id',$id)
         ->get();
        $posts = DB::table('posts')
-       ->where('user_id',$id)->latest()->get();
+       ->join('users', 'users.id', '=', 'posts.user_id')
+       ->where('user_id',$id)->latest('posts.created_at')->get();
         return view('users.user-profile', compact('user','followings','follow_count','follower_count','profiles','posts'));
     }
     public function search(Request $request){

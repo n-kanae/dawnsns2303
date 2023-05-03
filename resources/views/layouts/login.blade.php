@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="ページの内容を表す文章" />
     <title></title>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/reset.css')}}">
+    <link rel="stylesheet" href="{{ asset ('css/style.css')}}">
     <!--スマホ,タブレット対応-->
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <!--サイトのアイコン指定-->
@@ -22,7 +22,7 @@
 <body>
     <header>
         <div id = "head">
-         <h1><a href="/top"><img src="images/main_logo.png"></a></h1>
+         <h1><a href="/top"><img src="{{asset('images/main_logo.png')}}"></a></h1>
             <div id="top-menu" class="top-menu">
                 <div class="name">
                     <p>{{ $user->username}} さん</p>
@@ -47,12 +47,12 @@
                 <p>{{ $user->username}}さんの</p>
                 <div>
                 <p>フォロー数</p>
-                <p>{{ $follow_count }}名</p>
+                <p>{{$follow_count}}名</p>
                 </div>
                 <p class="btn"><a href="/follow-list">フォローリスト</a></p>
                 <div>
                 <p>フォロワー数</p>
-                <p>{{ $follower_count }}名</p>
+                <p>{{$follower_count}}名</p>
                 </div>
                 <p class="btn"><a href="/follower-list">フォロワーリスト</a></p>
             </div>
