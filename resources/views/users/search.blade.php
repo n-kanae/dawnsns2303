@@ -6,6 +6,9 @@
 <input type="text" name="search" placeholder="ユーザー名" >
 <input type="submit" value="検索">
 </form>
+@isset($keyword)
+<p>検索ワード：{{$keyword}}</p>
+@endisset
 @foreach($all_users as $all_user)
  <img src="/storage/{{$all_user->image}}">
  <p>{{$all_user->username}}</p>

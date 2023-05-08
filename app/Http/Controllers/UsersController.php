@@ -54,10 +54,11 @@ class UsersController extends Controller
             ->get();
         }else{
             //▼GETの場合
+        $keyword = null;
         $all_users = DB::table('users')
         ->get();
         }
-        return view('users.search',  compact('user','all_users','followings','follow_count','follower_count'));
+        return view('users.search',  compact('user','keyword','all_users','followings','follow_count','follower_count'));
     }
 
     public function userValidates(Request $request){
