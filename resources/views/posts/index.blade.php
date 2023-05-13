@@ -17,6 +17,14 @@
        <td>{{ $post -> username }}</td>
        <td>{{ $post -> post }}</td>
        <td>{{ $post -> created_at }}</td>
+
+       @if($post->user_id ===Auth::id())
+       <td><a href="/post/{{ $post->id }}/update-form"><img src="/images/edit.png"></a></td>
+       <td class="trash"><a href="/post/{{ $post->id }}/delete-form"><img src="/images/trash.png" onmouseover="this.src='/images/trash_h.png'" onmouseout="this.src='/images/trash.png'" /></a></td>
+       @else
+       <td></td>
+       <td></td>
+       @endif
    </tr>
   @endforeach
 </table>
