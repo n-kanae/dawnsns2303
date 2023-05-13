@@ -7,6 +7,9 @@
         <div class="form-group">
             {!! Form::input('text', 'newPost', null, ['required', 'class' => 'form-control', 'placeholder' => '何をつぶやこうか…？']) !!}
         </div>
+        @if($errors->has('newPost'))
+        <p>{{$errors->first('newPost')}}</p>
+        @endif
         <button type="submit" class=""><img src="images/post.png"></button>
         {!! Form::close() !!}
 </div>

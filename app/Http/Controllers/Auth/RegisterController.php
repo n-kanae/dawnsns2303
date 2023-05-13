@@ -47,13 +47,44 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    public function validator(Request $request)
     {
-        return Validator::make($data, [
-            'username' => 'required|string|max:255',
-            'mail' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:4|confirmed',
+        if($request->isMethod('post')){
+        $rule = [
+        'name' => ['required', 'text' , 'min:4' , 'max:12'],
+		'mail' => ['required', 'email' , 'min:4' , 'max:12'],
+		'password' => ['required' , 'min:4' , 'max:12'],
+		'password-confirm' => ['required' , 'min:4' , 'max:12' , 'same:password'],
+        ];
+
+        $validator = Validator::make($request->all(), $rule ,$messages = [
+        'name.required' => '必須項目です',
+        'name.min' => '4文字以上で入力してください',
+        'name.max' => '12文字以内で入力してください',
+		'mail.required' => '必須項目です',
+		'mail.email' => 'メールアドレスではありません',
+        'mail.min' => '4文字以上で入力してください',
+        'mail.max' => '12文字以内で入力してください',
+		'password.required' => '必須項目です',
+		'password.min' => '4文字以上で入力してください',
+        'password.max' => '12文字以内で入力してください',
+		'password-confirm.required' => '必須項目です',
+		'password-confirm.min' => '4文字以上で入力してください',
+        'password-confirm.max' => '12文字以内で入力してください',
+		'password-confirm.same' => 'パスワードと確認用パスワードが一致していません',
         ]);
+        if ($validator->fails()) {
+          return redirect('/register')
+              ->withErrors($validator)
+              ->withInput();
+      }
+
+        $data = $request->input();
+            $this->create($data);
+        $username = $request->username;
+        return redirect('added')->with('username',$username);
+    }
+    return view('auth.register');
     }
 
     /**

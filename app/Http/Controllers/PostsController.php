@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class PostsController extends Controller
 {
@@ -60,6 +61,32 @@ class PostsController extends Controller
     }
 
     public function update(Request $request){
+        $rule = [
+        'username' => ['required' , 'min:4' , 'max:12'],
+		'mail' => ['required', 'email' , 'min:4' , 'max:12'],
+		'password' => ['required' , 'min:4' , 'max:12'],
+		'new-password' => ['nullable','min:4' , 'max:12'],
+        'bio' => ['max:200','nullable']
+        ];
+
+        $validator = Validator::make($request->all(), $rule ,$messages = [
+        'username.required' => '必須項目です',
+        'username.min' => '4文字以上で入力してください',
+        'username.max' => '12文字以内で入力してください',
+		'mail.required' => '必須項目です',
+		'mail.email' => 'メールアドレスではありません',
+        'mail.min' => '4文字以上で入力してください',
+        'mail.max' => '12文字以内で入力してください',
+		'new-password.min' => '4文字以上で入力してください',
+        'new-password.max' => '12文字以内で入力してください',
+		'bio' => '200文字以内で入力してください'
+        ]);
+        if ($validator->fails()) {
+          return redirect('/profile')
+              ->withErrors($validator)
+              ->withInput();
+      }
+
         $name = $request->input('username');
         $mail = $request->input('mail');
         $bio = $request->input('bio');
@@ -99,6 +126,18 @@ class PostsController extends Controller
     }
 
     public function create(Request $request){
+        $validator = Validator::make($request->all(), [
+        'newPost' => 'required|max:200',
+        ],[
+        'newPost.required' => '必須項目です',
+        'newPost.max' => '200文字以内で入力してください'
+        ]);
+        if ($validator->fails()) {
+        // エラー発生時の処理
+        return redirect('/top')
+            ->withErrors($validator)
+            ->withInput();
+        }
         $post = $request->input('newPost');
         $user_id = Auth::user()-> id;
         DB::table('posts')->insert([
