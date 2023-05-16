@@ -30,7 +30,8 @@ class PostsController extends Controller
        //つぶやきを表示
        $post = DB::table('posts')
        ->join('users', 'users.id', '=', 'posts.user_id')
-       ->whereIn('posts.user_id',$followings->pluck('follow_id'))->orWhere('posts.user_id', Auth::id())->latest('posts.created_at')->get();
+       ->whereIn('posts.user_id',$followings->pluck('follow_id'))->orWhere('posts.user_id', Auth::id())->latest('posts.created_at')
+       ->select('image','username','post','posts.created_at','posts.id','posts.user_id')->get();
         return view('posts.index', [
             'user'           => $user,
             'follow_count'   => $follow_count,
@@ -127,10 +128,10 @@ class PostsController extends Controller
 
     public function create(Request $request){
         $validator = Validator::make($request->all(), [
-        'newPost' => 'required|max:200',
+        'newPost' => 'required|max:150',
         ],[
-        'newPost.required' => '必須項目です',
-        'newPost.max' => '200文字以内で入力してください'
+        'newPost.required' => '文字を入力してください',
+        'newPost.max' => '150文字以内で入力してください'
         ]);
         if ($validator->fails()) {
         // エラー発生時の処理
@@ -146,6 +147,37 @@ class PostsController extends Controller
             'created_at' =>now(),
             'updated_at' =>now()
         ]);
+        return redirect('/top');
+    }
+
+    public function postUpdate(Request $request){
+        $validator = Validator::make($request->all(), [
+        'newPost' => 'required|max:150',
+        ],[
+        'newPost.required' => '文字を入力してください',
+        'newPost.max' => '150文字以内で入力してください'
+        ]);
+        if ($validator->fails()) {
+        // エラー発生時の処理
+        return redirect('/top')
+            ->withErrors($validator)
+            ->withInput();
+        }
+        $post = $request->input('newPost');
+        $id = $request->id;
+        DB::table('posts')->where('id',$id)
+        ->update([
+            'post'=> $post,
+            'updated_at' =>now()
+        ]);
+        return redirect('/top');
+    }
+
+    public function delete($id){
+        DB::table('posts')
+            ->where('id', $id)
+            ->delete();
+
         return redirect('/top');
     }
 }
