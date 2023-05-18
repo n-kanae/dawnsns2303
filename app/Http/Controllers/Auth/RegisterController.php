@@ -11,17 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
     /**
@@ -51,16 +40,16 @@ class RegisterController extends Controller
     {
         if($request->isMethod('post')){
         $rule = [
-        'name' => ['required', 'text' , 'min:4' , 'max:12'],
+        'username' => ['required','min:4' , 'max:12'],
 		'mail' => ['required', 'email' , 'min:4' , 'max:12'],
 		'password' => ['required' , 'min:4' , 'max:12'],
 		'password-confirm' => ['required' , 'min:4' , 'max:12' , 'same:password'],
         ];
 
         $validator = Validator::make($request->all(), $rule ,$messages = [
-        'name.required' => '必須項目です',
-        'name.min' => '4文字以上で入力してください',
-        'name.max' => '12文字以内で入力してください',
+        'username.required' => '必須項目です',
+        'username.min' => '4文字以上で入力してください',
+        'username.max' => '12文字以内で入力してください',
 		'mail.required' => '必須項目です',
 		'mail.email' => 'メールアドレスではありません',
         'mail.min' => '4文字以上で入力してください',
@@ -101,11 +90,6 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
-
-
-    // public function registerForm(){
-    //     return view("auth.register");
-    // }
 
     public function register(Request $request){
         if($request->isMethod('post')){

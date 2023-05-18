@@ -10,7 +10,7 @@
 {{ Form::label('username','UserName') }}
 {{ Form::text('username',null,['class' => 'input','placeholder' => 'dawntown']) }}
 @if($errors->has('name'))
- <p>{{$errors->first('name')}}</p>
+ <p>{{$errors->first('username')}}</p>
 @endif
 
 {{ Form::label('mail','MailAdress') }}

@@ -24,7 +24,7 @@ class FollowsController extends Controller
         ->get();
         $follower_count = $follower->count();
        //つぶやきを表示
-       $post = DB::table('posts')->whereIn('user_id',$followings->pluck('follow_id'))->orWhere('user_id', Auth::id())->latest()->get();
+       $post = DB::table('posts')->whereIn('user_id',$followings->pluck('follow_id'))->latest()->get();
        //フォローしているユーザー一覧表示
        $follow_users = DB::table('users')
        ->whereIn('id',$followings->pluck('follow_id'))
@@ -50,7 +50,7 @@ class FollowsController extends Controller
         ->get();
         $follower_count = $follower->count();
        //つぶやきを表示
-       $post = DB::table('posts')->whereIn('user_id',$follower->pluck('follower_id'))->orWhere('user_id', Auth::id())->latest()->get();
+       $post = DB::table('posts')->whereIn('user_id',$follower->pluck('follower_id'))->latest()->get();
        //自分をフォローしているユーザー一覧表示
        $follower_users = DB::table('users')
        ->whereIn('id',$follower->pluck('follower_id'))

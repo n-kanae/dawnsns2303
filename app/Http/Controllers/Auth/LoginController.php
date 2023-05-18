@@ -9,16 +9,6 @@ use Auth;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
 
     use AuthenticatesUsers;
 
@@ -46,8 +36,6 @@ class LoginController extends Controller
             //パスワードの文字数をセッションに保存
             $password = strlen($request->password);
             $session = session()->put('session',$password);
-            // ログインが成功したら、トップページへ
-            //↓ログイン条件は公開時には消すこと
             if(Auth::attempt($data)){
                 return redirect('/top');
             }

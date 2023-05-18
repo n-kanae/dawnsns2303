@@ -6,8 +6,8 @@
   @csrf
   <label for="username">UserName</label>
   <input type="text" name="username" id="username" value="{{$user->username}}">
-@if($errors->has('name'))
- <p>{{$errors->first('name')}}</p>
+@if($errors->has('username'))
+ <p>{{$errors->first('username')}}</p>
 @endif
 
   <label for="mail">MailAdress</label>
@@ -17,9 +17,10 @@
 @endif
 
   <label for="password">Password</label>
-  <input type="password" name="password" id="password" value="<?php for ($num = 0; $num < $session; $num++){
+  <input type="password" value="<?php for ($num = 0; $num < $session; $num++){
             echo $num;
         };?>">
+  <input type="hidden"  name="password" id="password" value="{{$user->password}}">
 
   <label for="new-password">new Password</label>
   <input type="password" name="new-password" id="new-password">

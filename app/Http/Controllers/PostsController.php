@@ -65,7 +65,6 @@ class PostsController extends Controller
         $rule = [
         'username' => ['required' , 'min:4' , 'max:12'],
 		'mail' => ['required', 'email' , 'min:4' , 'max:12'],
-		'password' => ['required' , 'min:4' , 'max:12'],
 		'new-password' => ['nullable','min:4' , 'max:12'],
         'bio' => ['max:200','nullable']
         ];
@@ -93,10 +92,13 @@ class PostsController extends Controller
         $bio = $request->input('bio');
         //新パスワードが入力されているかどうかで分岐
         if(request('new-password')){
-            $password = $request->input('new-password');
+            $new_password = $request->input('new-password');
+            $password = bcrypt($new_password);
             $old_session = session()->forget('session');
+            $password_count = strlen($new_password);
+            $session = session()->put('session',$password_count);
         }else{
-            $password = $request->input('password');
+            $password = Auth::user()->password;
         }
         if(request('image')){
         $image = $request->file('image');
@@ -121,8 +123,6 @@ class PostsController extends Controller
             'bio'=>$bio,
         ]);
         }
-        $new_password = strlen($password);
-        $session = session()->put('session',$new_password);
         return redirect('/profile');
     }
 

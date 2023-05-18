@@ -50,11 +50,13 @@ class UsersController extends Controller
             $keyword = $request->search;
             $all_users = DB::table('users')
             ->where('username','LIKE',"%".$keyword."%")
+            ->where('id','!=',Auth::id())
             ->get();
         }else{
             //▼GETの場合
         $keyword = null;
         $all_users = DB::table('users')
+        ->where('id','!=',Auth::id())
         ->get();
         }
         return view('users.search',  compact('user','keyword','all_users','followings','follow_count','follower_count'));
